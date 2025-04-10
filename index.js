@@ -6,7 +6,8 @@ const user=require('./model/User')
 
 
 const server = express();
-server.use(cors());
+ server.use(cors());
+
 server.use(bodyParser.json());
 
 
@@ -93,6 +94,5 @@ server.post('/login', async (req, res) => {
   
 
 
-server.listen(8055, () => {
-  console.log('Server started at port 8055');
-});
+
+  module.exports = server;
