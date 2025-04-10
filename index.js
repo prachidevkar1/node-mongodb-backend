@@ -34,46 +34,33 @@ server.post('/register', async (req, res) => {
   }
 });
 
-server.post('/login', async (req, res) => {
-  try {
-    const { userName, password } = req.body;
-
-    if (!userName || !password) {
-      return res.json({
-        status: false,
-        message: 'Username or password is missing',
-      });
-    }
-
-    const userExist = await User.findOne({ userName }); // ✅ Use consistent model
-
-    if (!userExist) {
-      return res.json({
-        status: false,
-        message: 'User not found',
-      });
-    }
-
-    if (password !== userExist.password) {
-      return res.json({
-        status: false,
-        message: 'Wrong password',
-      });
-    }
-
-    return res.json({
-      status: true,
-      message: 'Login successful',
-      user: userExist,
-    });
-
-  } catch (err) {
-    res.json({
-      status: false,
-      message: `Error: ${err.message}`,
-    });
+server.post('/login',async(req,res)=>{
+  try{
+      const{userName,password}=req.body
+      const userExist=await User.findOne({userName})
+      if(!userExist){
+          return res.json({
+              status:false,
+              message:'user not found!!'
+          })
+      }
+      if(password!==userExist.password){
+          return res.json({
+              status:false,
+              message:'wrong password!!'
+          })
+      }
+      res.json({
+          status:true ,
+          message:'login Succesful'
+      })
+  }catch (err){
+      res.json({
+          status:false,
+          message:`Error${err} `  
+      })
   }
-});
+})
 
 server.listen(8055,()=>{
   console.log('Server started listening on port 8055')
